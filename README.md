@@ -2,7 +2,9 @@
 
 Browser extension for Microsoft Edge that enhances product pages on **suruga-ya.com/en** by providing a modern side panel with visual and marketplace references for books and artbooks.
 
-The extension adds a floating action button (FAB) on product pages, allowing users to open a dark, glass-style sidebar with relevant information and external search links.
+The extension adds a floating action button (FAB) on product pages, allowing users to open a sidebar with relevant information and external search links.
+
+N.B. The extension is a very simplified version of a search. Therefore, some product names and links may be incorrect.
 
 ---
 
