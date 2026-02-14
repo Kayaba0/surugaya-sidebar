@@ -14,36 +14,45 @@
       </div>
 
       <div class="titles">
-        <div id="titleRaw" class="title main"></div>
+        <a id="titleRaw" class="title main titleLink" target="_blank" rel="noreferrer"></a>
+        <div id="titleSep" class="titleSep" style="display:none;"></div>
         <div id="titleJp" class="title sub" style="display:none;"></div>
       </div>
 
       <div class="grid">
-        <div class="kv pagesAccent">
-          <div class="k">Pagine</div>
+        <div class="kv pagesAccent pagesLine">
+          <div class="k">Pages:</div>
           <div id="pages" class="v big">—</div>
         </div>
       </div>
 
       <div class="actions">
-        <a id="amazonEn" class="btn" target="_blank" rel="noreferrer">Amazon</a>
-        <a id="ebayEn" class="btn" target="_blank" rel="noreferrer">eBay</a>
+        <a id="amazonEn" class="btn btnAmazon" target="_blank" rel="noreferrer">Amazon</a>
+        <a id="ebayEn" class="btn btnEbay" target="_blank" rel="noreferrer">eBay</a>
       </div>
 
       <div class="actions">
-        <a id="amazonJp" class="btn ghost" target="_blank" rel="noreferrer">Amazon JP</a>
-        <a id="ebayJp" class="btn ghost" target="_blank" rel="noreferrer">eBay (JP)</a>
+        <a id="amazonJp" class="btn ghost btnAmazonJp" target="_blank" rel="noreferrer">Amazon JP</a>
+        <a id="ebayJp" class="btn ghost btnEbayJp" target="_blank" rel="noreferrer">eBay (JP)</a>
       </div>
 
       <div class="actions">
-        <a id="lens" class="btn lens" target="_blank" rel="noreferrer">Ricerca visiva (Lens)</a>
+        <a id="lens" class="btn lens btnLens" target="_blank" rel="noreferrer">🔎 Visual search</a>
       </div>
 
       <div class="actions">
-        <a id="yt" class="btn ghost" target="_blank" rel="noreferrer">YouTube flipthrough</a>
+        <a id="yt" class="btn ghost btnYoutube" target="_blank" rel="noreferrer">YouTube flipthrough</a>
       </div>
 
-      <div id="status" class="status">Apri una pagina prodotto su Suruga-ya (EN).</div>
+      <div class="history">
+        <div class="historyHead">
+          <div class="historyTitle">Recent searches</div>
+          <button id="clearHistory" class="historyClear" title="Clear history" aria-label="Clear history">🧹</button>
+        </div>
+        <div id="historyList" class="historyList" aria-label="Recent searches list"></div>
+      </div>
+
+      <div id="status" class="status"></div>
     </section>
   </main>
 

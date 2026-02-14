@@ -1,32 +1,67 @@
 #syFab {
   position: fixed;
-  right: 18px;
-  bottom: 18px;
+  top: 16px;
+  right: 16px;
+  bottom: auto;
+  left: auto;
+
   z-index: 2147483647;
   display: none;
-  border: 1px solid rgba(255,255,255,.18);
-  background: rgba(20,22,26,.72);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  color: rgba(255,255,255,.92);
-  border-radius: 999px;
-  padding: 10px 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+
+  /* Nero opaco */
+  background: rgba(10, 10, 14, 0.92);
+
+  /* Cornice gradiente rosa/viola */
+  border: 1px solid transparent;
+  background-image:
+    linear-gradient(rgba(10,10,14,0.92), rgba(10,10,14,0.92)),
+    linear-gradient(135deg, #ff78d2, #a078ff);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+
+  color: #ffffff;
+
+  border-radius: 12px;
+  padding: 8px 14px;
+  gap: 8px;
+
+  box-shadow: none;
+
   cursor: pointer;
   user-select: none;
-  font: 800 12px/1 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  transition: transform .12s ease, background .12s ease, border-color .12s ease, opacity .12s ease;
+
+  font: 500 13px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  letter-spacing: 0.2px;
+
+  transition: transform 140ms ease, background 200ms ease, opacity 200ms ease;
 }
+
 #syFab:hover {
   transform: translateY(-1px);
-  border-color: rgba(255,255,255,.30);
-  background: rgba(20,22,26,.82);
+  opacity: 0.95;
 }
-#syFab:active { transform: translateY(0px) scale(.99); opacity: .95; }
+
+#syFab:active {
+  transform: translateY(0px) scale(0.98);
+}
+
 #syFab .dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: rgba(255,105,180,.95);
-  display: inline-block;
-  margin-right: 8px;
-  box-shadow: 0 0 0 3px rgba(255,105,180,.18);
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #ff78d2;
+  box-shadow: none;
+}
+
+#syFab span:last-child {
+  white-space: nowrap;
+}
+
+@media (max-width: 420px) {
+  #syFab {
+    top: 12px;
+    right: 12px;
+    padding: 7px 12px;
+    font-size: 12.5px;
+  }
 }

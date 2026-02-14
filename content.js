@@ -52,13 +52,26 @@ function extractPages() {
   return findPagesInText(body);
 }
 
+function buildPayloadIfProduct() {
+  if (!isProbablyProductPage()) return null;
+
+  const titleRaw = extractTitleRaw();
+  const titleJp = extractTitleJp();
+  const coverUrl = extractCoverUrl();
+  const pages = extractPages();
+
+  if (!titleRaw || !coverUrl) return null;
+
+  return { url: location.href, coverUrl, titleRaw, titleJp, pages };
+}
+
 function ensureFab() {
   let fab = document.getElementById("syFab");
   if (fab) return fab;
   fab = document.createElement("button");
   fab.id = "syFab";
   fab.type = "button";
-  fab.innerHTML = '<span class="dot"></span><span>Info artbook</span>';
+  fab.innerHTML = '<span class="dot"></span><span>Artbook Info</span>';
   fab.addEventListener("click", () => {
     chrome.runtime.sendMessage({ type: "OPEN_SIDEPANEL" }, () => void chrome.runtime.lastError);
   });
@@ -70,10 +83,13 @@ let lastSentHref = null;
 
 function sendIfProduct() {
   const fab = ensureFab();
-  if (!isProbablyProductPage()) {
+  const payload = buildPayloadIfProduct();
+
+  if (!payload) {
     fab.style.display = "none";
     return;
   }
+
   fab.style.display = "inline-flex";
   fab.style.alignItems = "center";
   fab.style.gap = "8px";
@@ -81,18 +97,21 @@ function sendIfProduct() {
   if (lastSentHref === location.href) return;
   lastSentHref = location.href;
 
-  const titleRaw = extractTitleRaw();
-  const titleJp = extractTitleJp();
-  const coverUrl = extractCoverUrl();
-  const pages = extractPages();
-
-  if (!titleRaw || !coverUrl) return;
-
   chrome.runtime.sendMessage({
     type: "PRODUCT_DETECTED",
-    payload: { url: location.href, coverUrl, titleRaw, titleJp, pages }
+    payload
   }, () => void chrome.runtime.lastError);
 }
+
+// consenti al sidepanel di forzare la scansione della tab corrente
+chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+  if (msg?.type === "SCAN_NOW") {
+    const payload = buildPayloadIfProduct();
+    sendResponse({ ok: true, payload });
+    return true;
+  }
+  return false;
+});
 
 sendIfProduct();
 setTimeout(sendIfProduct, 900);
