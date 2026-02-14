@@ -390,3 +390,23 @@ html, body{
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+
+/* Ko-fi button: bottom-right, detached from result box */
+#coffeeBtn{
+  position: fixed;
+  right: 12px;
+  bottom: 12px;
+  z-index: 2147483647;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  text-decoration: none;
+  opacity: 0.95;
+}
+#coffeeBtn:hover{ opacity: 1; }
+#coffeeBtn img{ display:block; }
