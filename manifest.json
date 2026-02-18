@@ -1,18 +1,26 @@
 {
   "manifest_version": 3,
   "name": "Suruga-ya Sidebar",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "V2 (lite): sidebar dark-glass + FAB. Cover sempre visibile (dataURL), Lens + YouTube flipthrough (best-effort, no API key).",
-  "permissions": ["sidePanel", "tabs", "storage"],
+  "permissions": [
+    "sidePanel",
+    "tabs",
+    "storage"
+  ],
   "host_permissions": [
-    "https://www.suruga-ya.com/en/*",
     "https://*.suruga-ya.com/*",
     "https://*.suruga-ya.jp/*",
+    "https://api.exchangerate.host/*",
     "https://lens.google.com/*",
+    "https://openlibrary.org/*",
+    "https://www.googleapis.com/*",
+    "https://www.suruga-ya.com/en/*",
+    "https://www.wikidata.org/*",
     "https://www.youtube.com/*"
   ],
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'; img-src 'self' data: blob: https:; connect-src 'self' https://www.youtube.com;"
+    "extension_pages": "script-src 'self'; object-src 'self'; img-src 'self' data: blob: https:; connect-src 'self' https://www.youtube.com https://api.exchangerate.host;"
   },
   "background": {
     "service_worker": "background.js",
@@ -20,15 +28,22 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.suruga-ya.com/en/*"],
-      "js": ["content.js"],
-      "css": ["content.css"],
+      "matches": [
+        "https://www.suruga-ya.com/en/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
       "run_at": "document_idle",
       "all_frames": true
     }
   ],
-  "side_panel": { "default_path": "sidepanel.html" }
-,
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
   "icons": {
     "16": "icons/icon16.png",
     "32": "icons/icon32.png",

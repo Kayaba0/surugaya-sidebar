@@ -8,60 +8,104 @@
   z-index: 2147483647;
   display: none;
 
-  /* Nero opaco */
-  background: rgba(10, 10, 14, 0.92);
+  /* reset native button look */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 
-  /* Cornice gradiente rosa/viola */
-  border: 1px solid transparent;
-  background-image:
-    linear-gradient(rgba(10,10,14,0.92), rgba(10,10,14,0.92)),
-    linear-gradient(135deg, #ff78d2, #a078ff);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
+  /* Dark glass pill */
+  background: rgba(0, 0, 0, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: none;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 
   color: #ffffff;
 
-  border-radius: 12px;
-  padding: 8px 14px;
-  gap: 8px;
-
-  box-shadow: none;
+  border-radius: 999px;
+  padding: 6px 12px 6px 8px;
+  gap: 10px;
 
   cursor: pointer;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
 
-  font: 500 13px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font: 500 12px/1.1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   letter-spacing: 0.2px;
 
-  transition: transform 140ms ease, background 200ms ease, opacity 200ms ease;
 }
 
+
+#syFab:focus,
+#syFab:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+/* remove inner focus border on Firefox */
+#syFab::-moz-focus-inner {
+  border: 0;
+}
 #syFab:hover {
-  transform: translateY(-1px);
-  opacity: 0.95;
+  border: 2px solid #ff8a00;
 }
 
 #syFab:active {
   transform: translateY(0px) scale(0.98);
+  /* no border flash on press */
+  border-color: rgba(255, 255, 255, 0.14);
 }
 
-#syFab .dot {
-  width: 8px;
-  height: 8px;
+
+#syFab .arrow{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width: 10px;
+  font-size: 10px;
+  line-height: 1;
+  opacity: .55;
+  margin-left: 4px;
+}
+
+#syFab .icon {
+  width: 28px;
+  height: 28px;
   border-radius: 999px;
-  background: #ff78d2;
-  box-shadow: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.70);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+  font-size: 16px;
 }
 
-#syFab span:last-child {
+#syFab .icon svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+#syFab .label {
   white-space: nowrap;
+  font-weight: 650;
+}
+
+#syFab .chev {
+  margin-left: 2px;
+  opacity: .65;
+  font-size: 18px;
+  line-height: 1;
+  transform: translateY(-.5px);
 }
 
 @media (max-width: 420px) {
   #syFab {
     top: 12px;
     right: 12px;
-    padding: 7px 12px;
+    padding: 9px 12px 9px 9px;
     font-size: 12.5px;
   }
+  #syFab .icon{ width: 26px; height: 26px; }
 }

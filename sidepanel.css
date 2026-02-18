@@ -43,6 +43,11 @@ html, body{
   display:flex;
   flex-direction:column;
   gap: 12px;
+
+
+  opacity: 1;
+
+  transform: none;
 }
 
 .coverBox{
@@ -84,7 +89,7 @@ html, body{
 
 .grid{
   display:grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
 
@@ -98,8 +103,8 @@ html, body{
 
 .pagesAccent{
   position: relative;
-  min-height: 52px;
-  padding: 8px 10px;
+  min-height: 44px;
+  padding: 6px 10px;
 
   border: 1px solid rgba(255,255,255,.08);
   background: rgba(0,0,0,.18);
@@ -157,7 +162,7 @@ html, body{
   color: rgba(0,0,0,.92);
   background: rgba(255,255,255,.92);
   border: 1px solid rgba(255,255,255,.20);
-  transition: transform .12s ease, filter .12s ease, opacity .12s ease;
+
 }
 
 .btn:hover{ transform: translateY(-1px); filter: brightness(1.02); }
@@ -217,6 +222,30 @@ html, body{
   margin:0;
   margin-left: 6px;
   line-height: 1.15;
+}
+
+/* Price box: EUR big with JPY inline (smaller) */
+.priceBox{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap: 4px;
+}
+.priceBox .k{ margin:0; }
+.priceBox .v.big{ margin:0; line-height: 1.15; }
+
+.priceLine{
+  display:flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.yenInline{
+  font-size: 12.5px;
+  font-weight: 850;
+  color: rgba(255,255,255,.78);
+  letter-spacing: .1px;
 }
 
 /* Button colors (only change requested area) */
@@ -289,7 +318,7 @@ html, body{
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  transition: transform .12s ease, filter .12s ease, opacity .12s ease;
+
 }
 .historyClear:hover{ transform: translateY(-1px); filter: brightness(1.04); }
 .historyClear:active{ transform: translateY(0px); opacity: .92; }
@@ -337,7 +366,7 @@ html, body{
   background: rgba(255,255,255,.06);
   border: 1px solid rgba(255,255,255,.12);
   cursor: pointer;
-  transition: transform .12s ease, filter .12s ease, opacity .12s ease;
+
 }
 .hItem:hover{ transform: translateY(-1px); filter: brightness(1.04); }
 .hItem:active{ transform: translateY(0px); opacity: .92; }
@@ -357,6 +386,27 @@ html, body{
   font-size: 12px;
   font-weight: 800;
   color: rgba(255,255,255,.90);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hPrice{
+  flex: 0 0 auto;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .15px;
+  color: rgba(255,255,255,.96);
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.24);
+  background: rgba(0,0,0,.32);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.10),
+    0 6px 18px rgba(0,0,0,.28);
+  text-shadow: 0 1px 1px rgba(0,0,0,.55);
+  margin-right: 2px;
+  max-width: 112px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -410,3 +460,10 @@ html, body{
 }
 #coffeeBtn:hover{ opacity: 1; }
 #coffeeBtn img{ display:block; }
+
+
+
+
+
+
+

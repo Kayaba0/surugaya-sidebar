@@ -2,10 +2,19 @@
 const keyFor = (tabId) => `lastProduct:${tabId}`;
 const LAST_ACTIVE_KEY = "lastProduct:active";
 
+// Track side panel open state per tab (best-effort, for toggle button)
+const sidePanelState = new Map(); // tabId -> boolean
+
 function ensureSidePanelEnabled(tabId) {
   chrome.sidePanel.setOptions({ tabId, path: "sidepanel.html", enabled: true }, () => {
     void chrome.runtime.lastError;
   });
+}
+
+
+function notifyFabState(tabId, isOpen) {
+  if (!tabId) return;
+  chrome.tabs.sendMessage(tabId, { type: "SIDEPANEL_STATE", isOpen: !!isOpen }, () => void chrome.runtime.lastError);
 }
 
 function arrayBufferToBase64(buf) {
@@ -148,6 +157,47 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     return true;
   }
 
+  
+  if (msg?.type === "SIDEPANEL_CLOSED_ANIM_DONE") {
+    const tabId = msg?.tabId || sender?.tab?.id;
+    if (tabId) {
+      chrome.sidePanel.setOptions({ tabId, enabled: false }, () => void chrome.runtime.lastError);
+      sidePanelState.set(tabId, false);
+      notifyFabState(tabId, false);
+    }
+    sendResponse({ ok: true });
+    return true;
+  }
+
+if (msg?.type === "TOGGLE_SIDEPANEL") {
+    const tabId = sender?.tab?.id;
+    if (!tabId) { sendResponse({ ok: false, error: "No sender tabId (TOGGLE_SIDEPANEL)" }); return true; }
+    const isOpen = !!sidePanelState.get(tabId);
+    if (isOpen) {
+      // Close immediately (no animations)
+      chrome.sidePanel.setOptions({ tabId, enabled: false }, () => void chrome.runtime.lastError);
+      sidePanelState.set(tabId, false);
+      notifyFabState(tabId, false);
+      sendResponse({ ok: true, toggled: "close" });
+      return true;
+    }
+    ensureSidePanelEnabled(tabId);
+    chrome.sidePanel.open({ tabId })
+      .then(() => { sidePanelState.set(tabId, true); notifyFabState(tabId, true); updateSidepanelForActiveTab(tabId).catch(() => {}); sendResponse({ ok: true, toggled: "open" }); })
+      .catch((e) => sendResponse({ ok: false, toggled: "open", error: String(e?.message || e) }));
+    return true;
+  }
+
+  if (msg?.type === "SIDEPANEL_CLOSE_ANIM_DONE") {
+    const tabId = msg?.tabId;
+    if (tabId) {
+      chrome.sidePanel.setOptions({ tabId, enabled: false }, () => void chrome.runtime.lastError);
+      sidePanelState.set(tabId, false);
+    }
+    sendResponse({ ok: true });
+    return true;
+  }
+
   if (msg?.type === "OPEN_SIDEPANEL") {
     const tabId = sender?.tab?.id;
     if (!tabId) {
@@ -171,6 +221,7 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
             });
           }
         });
+        sidePanelState.set(tabId, true);
         sendResponse({ ok: true, opened: true });
       })
       .catch((e) => sendResponse({ ok: false, opened: false, error: String(e?.message || e) }));
